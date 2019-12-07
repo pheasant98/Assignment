@@ -15,10 +15,10 @@ public class TakeAwayBillInstance implements TakeAwayBill {
             throws TakeAwayBillException 
     {
         double PrezzoTotale=0.0;
-        double PaninoMin=0.0;
+        double PaninoMin=Double.MAX_VALUE;
         double PrezzoPaninoEFritti=0.0;
         double ScontoTotale=0.0;
-        int sandwichNumber=0;
+        int NumeroPanini=0;
         
         if(itemsOrdered.size() > 30) {
             throw new TakeAwayBillException("ERRORE");
@@ -28,18 +28,15 @@ public class TakeAwayBillInstance implements TakeAwayBill {
             PrezzoTotale+=itemOrdered.getPrice();
             
             if(itemOrdered.getType()==ItemType.Panini) 
-            {
-                if(sandwichNumber==0) 
-                {
-                    PaninoMin=itemOrdered.getPrice();
-                } else if(itemOrdered.getPrice()<PaninoMin) 
+            {                    
+                if(itemOrdered.getPrice()<PaninoMin) 
                 {
                     PaninoMin=itemOrdered.getPrice();
                 }
                 
                 PrezzoPaninoEFritti+=itemOrdered.getPrice();
                 
-                sandwichNumber++;
+                NumeroPanini++;
             }
             
             if(itemOrdered.getType()==ItemType.Fritti) {
@@ -47,7 +44,7 @@ public class TakeAwayBillInstance implements TakeAwayBill {
             }
         }
         
-        if(sandwichNumber>5) 
+        if(NumeroPanini>5) 
         {
             ScontoTotale+=PaninoMin / 2.0;
         }
@@ -57,8 +54,10 @@ public class TakeAwayBillInstance implements TakeAwayBill {
             ScontoTotale+=PrezzoTotale * 0.10;
         }
         
-        return PrezzoTotale-ScontoTotale;
-    }  
-    
-
+        if(PrezzoTotale<10 && PrezzoTotale>0)
+        {
+            PrezzoTotale+=0.50;
+        }
+        return PrezzoTotale-ScontoTotale;        
+    }      
 }

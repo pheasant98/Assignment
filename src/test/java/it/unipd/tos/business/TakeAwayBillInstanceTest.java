@@ -105,7 +105,8 @@ public class TakeAwayBillInstanceTest {
     
     @Test(expected = TakeAwayBillException.class) 
     public void testErrorForOrdersWithMoreThan30Elements() 
-            throws TakeAwayBillException {
+            throws TakeAwayBillException
+    {
         
         List<MenuItem> itemsOrdered = new ArrayList<MenuItem>();
         for(int i = 0; i < 31; ++i) {
@@ -113,5 +114,35 @@ public class TakeAwayBillInstanceTest {
         }
         
         app.getOrderPrice(itemsOrdered);
+    }
+    
+    @Test
+    public void TakeAwayBillInstanceTestCaseZero()
+    {
+        List<MenuItem> lista=  new ArrayList();
+        lista.add(new MenuItem(ItemType.Bevande, "Acqua", 0));
+        try
+        {
+            assertEquals(0, app.getOrderPrice(lista),0);
+        }
+        catch(TakeAwayBillException e)
+        {
+            fail("Exception");
+        }    
+    }
+    
+    @Test
+    public void TakeAwayBillInstanceTestAmountLessThan10() 
+    {
+        List<MenuItem> lista=  new ArrayList();
+        lista.add(new MenuItem(ItemType.Bevande, "Coca-cola", 9));
+        try
+        {
+            assertEquals(9.50, app.getOrderPrice(lista),0);
+        }
+        catch(TakeAwayBillException e)
+        {
+            fail("Exception");
+        }    
     }
 }
