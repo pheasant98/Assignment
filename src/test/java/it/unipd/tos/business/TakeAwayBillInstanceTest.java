@@ -25,7 +25,7 @@ public class TakeAwayBillInstanceTest {
     }
     
     @Test
-    public void TakeAwayBillInstanceTest()
+    public void TakeAwayBillInstanceTestPriceCalcolator()
     {
         List<MenuItem> lista=  new ArrayList();
         lista.add(new MenuItem(ItemType.Panini, "Fantasia", 8));
@@ -38,8 +38,26 @@ public class TakeAwayBillInstanceTest {
         catch(TakeAwayBillException e)
         {
             fail("Exception");
+        }    
+    }
+    
+    public void TakeAwayBillInstanceTestDiscountIfMoreThan5Sandwiches()
+    {
+        List<MenuItem> lista=  new ArrayList();
+        lista.add(new MenuItem(ItemType.Panini, "Fantasia", 8));
+        lista.add(new MenuItem(ItemType.Panini, "Vegetariano", 5));
+        lista.add(new MenuItem(ItemType.Panini, "Bellissima", 5));
+        lista.add(new MenuItem(ItemType.Panini, "Primavera", 8));
+        lista.add(new MenuItem(ItemType.Panini, "Sole", 5));
+        lista.add(new MenuItem(ItemType.Panini, "Luna", 4));
+        lista.add(new MenuItem(ItemType.Bevande, "Coca-Cola", 4));
+        try
+        {
+            assertEquals(37, app.getOrderPrice(lista),0);
         }
-        
-        
+        catch(TakeAwayBillException e)
+        {
+            fail("Exception");
+        }    
     }
 }
