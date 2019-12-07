@@ -41,6 +41,7 @@ public class TakeAwayBillInstanceTest {
         }    
     }
     
+    @Test
     public void TakeAwayBillInstanceTestDiscountIfMoreThan5Sandwiches()
     {
         List<MenuItem> lista=  new ArrayList();
@@ -61,6 +62,7 @@ public class TakeAwayBillInstanceTest {
         }    
     }
     
+    @Test
     public void TakeAwayBillInstanceTestDiscountfor50EuroSandwichesAndFried()
     {
         List<MenuItem> lista=  new ArrayList();
@@ -78,6 +80,7 @@ public class TakeAwayBillInstanceTest {
             fail("Exception");
         }    
     }
+    @Test
     public void TakeAwayBillInstanceTestDiscountx2for50ESandwichesAndFried()
     {
         List<MenuItem> lista=  new ArrayList();
@@ -98,5 +101,17 @@ public class TakeAwayBillInstanceTest {
         {
             fail("Exception");
         }    
+    }
+    
+    @Test(expected = TakeAwayBillException.class) 
+    public void testErrorForOrdersWithMoreThan30Elements() 
+            throws TakeAwayBillException {
+        
+        List<MenuItem> itemsOrdered = new ArrayList<MenuItem>();
+        for(int i = 0; i < 31; ++i) {
+            itemsOrdered.add(new MenuItem(ItemType.Panini, "Fantasia", 2));
+        }
+        
+        app.getOrderPrice(itemsOrdered);
     }
 }

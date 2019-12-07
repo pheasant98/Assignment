@@ -12,48 +12,53 @@ public class TakeAwayBillInstance implements TakeAwayBill {
     
 
     public double getOrderPrice(List<MenuItem> itemsOrdered)
-            throws TakeAwayBillException {
-        // TODO Auto-generated method stub
-        double price=0;
-        double pricePF=0;
-        double countP=0;
-        double minP=Double.MAX_VALUE;
-        for(int i=0; i < itemsOrdered.size(); i++)
+            throws TakeAwayBillException 
+    {
+        double PrezzoTotale=0.0;
+        double PaninoMin=0.0;
+        double PrezzoPaninoEFritti=0.0;
+        double ScontoTotale=0.0;
+        int sandwichNumber=0;
+        
+        if(itemsOrdered.size() > 30) {
+            throw new TakeAwayBillException("ERRORE");
+        }
+        for(MenuItem itemOrdered : itemsOrdered) 
         {
-            price+=itemsOrdered.get(i).getPrice();
-            if(itemsOrdered.get(i).getType() == ItemType.Panini)
+            PrezzoTotale+=itemOrdered.getPrice();
+            
+            if(itemOrdered.getType()==ItemType.Panini) 
             {
-                countP++;
-                if(minP>price)
+                if(sandwichNumber==0) 
                 {
-                    minP=price;
+                    PaninoMin=itemOrdered.getPrice();
+                } else if(itemOrdered.getPrice()<PaninoMin) 
+                {
+                    PaninoMin=itemOrdered.getPrice();
                 }
+                
+                PrezzoPaninoEFritti+=itemOrdered.getPrice();
+                
+                sandwichNumber++;
             }
             
-            if((itemsOrdered.get(i).getType() == ItemType.Panini) 
-                    || (itemsOrdered.get(i).getType() == ItemType.Panini))
-            {
-                pricePF+=itemsOrdered.get(i).getPrice();
+            if(itemOrdered.getType()==ItemType.Fritti) {
+                PrezzoPaninoEFritti+=itemOrdered.getPrice();
             }
-            
         }
         
-        if(pricePF>50)
+        if(sandwichNumber>5) 
         {
-            price=price-price*0.1;
+            ScontoTotale+=PaninoMin / 2.0;
         }
         
-        if(countP>5)
+        if(PrezzoPaninoEFritti>50.0) 
         {
-            price=price-minP*0.5;
+            ScontoTotale+=PrezzoTotale * 0.10;
         }
         
-        
-
-        
-        return price;
-    }
-    
+        return PrezzoTotale-ScontoTotale;
+    }  
     
 
 }
