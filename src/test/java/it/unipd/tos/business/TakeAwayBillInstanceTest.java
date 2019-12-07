@@ -60,4 +60,43 @@ public class TakeAwayBillInstanceTest {
             fail("Exception");
         }    
     }
+    
+    public void TakeAwayBillInstanceTestDiscountfor50EuroSandwichesAndFried()
+    {
+        List<MenuItem> lista=  new ArrayList();
+        lista.add(new MenuItem(ItemType.Panini, "Fantasia", 25));
+        lista.add(new MenuItem(ItemType.Panini, "Vegetariano", 25));
+        lista.add(new MenuItem(ItemType.Fritti, "Bellissima", 25));
+        lista.add(new MenuItem(ItemType.Fritti, "FrittoTutto", 15));
+        lista.add(new MenuItem(ItemType.Bevande, "Coca-Cola", 10));
+        try
+        {
+            assertEquals(90, app.getOrderPrice(lista),0);
+        }
+        catch(TakeAwayBillException e)
+        {
+            fail("Exception");
+        }    
+    }
+    public void TakeAwayBillInstanceTestDiscountx2for50ESandwichesAndFried()
+    {
+        List<MenuItem> lista=  new ArrayList();
+        lista.add(new MenuItem(ItemType.Panini, "Fantasia", 10));
+        lista.add(new MenuItem(ItemType.Panini, "Vegetariano", 10));
+        lista.add(new MenuItem(ItemType.Fritti, "Bellissima", 10));
+        lista.add(new MenuItem(ItemType.Fritti, "FrittoTutto", 10));
+        lista.add(new MenuItem(ItemType.Bevande, "Coca-Cola", 10));
+        lista.add(new MenuItem(ItemType.Panini, "Fantasia", 16));
+        lista.add(new MenuItem(ItemType.Panini, "Vegetariano", 15));
+        lista.add(new MenuItem(ItemType.Panini, "Fantasia", 15));
+        lista.add(new MenuItem(ItemType.Panini, "Vegetariano", 4));
+        try
+        {
+            assertEquals(88, app.getOrderPrice(lista),0);
+        }
+        catch(TakeAwayBillException e)
+        {
+            fail("Exception");
+        }    
+    }
 }
