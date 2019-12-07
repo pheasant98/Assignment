@@ -7,6 +7,9 @@ import static org.junit.Assert.*;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import it.unipd.tos.model.ItemType;
+import it.unipd.tos.model.MenuItem;
+
 public class MenuItemTest {
     
     private static MenuItem ordine;

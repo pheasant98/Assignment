@@ -3,10 +3,10 @@
 ////////////////////////////////////////////////////////////////////
 package it.unipd.tos.business.exception;
 
-import static org.junit.Assert.*;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+
 import org.junit.BeforeClass;
-import it.unipd.tos.model.ItemType;
+import org.junit.Test;
 public class TakeAwayBillExceptionTest {
 
     private static TakeAwayBillException exp;
@@ -16,7 +16,8 @@ public class TakeAwayBillExceptionTest {
         exp = new TakeAwayBillException("ERRORE");
     }
 
-    public static void testGetMessage() {
+    @Test
+    public void testGetMessage() {
         assertEquals("ERRORE", exp.getMessage());
     }
 }
